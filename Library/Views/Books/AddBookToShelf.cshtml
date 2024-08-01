@@ -1,0 +1,61 @@
+﻿@model Library.ViewModel.BookShelf
+
+@{
+    ViewData["Title"] = "AddBookToShelf";
+}
+
+<h1>AddBookToShelf</h1>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+    TempData["ErrorMessage"] = null;
+}
+<meta charset="utf-8">
+
+<h4>Shelf</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddBookToShelf" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="ShelfId" class="control-label"></label>
+                <select asp-for="ShelfId" class="form-control" asp-items="ViewBag.ShelvesId"></select>
+                <span asp-validation-for="ShelfId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="BookId" type="hidden" class="form-control" value="@ViewData["Id"]" />
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@{
+    var alertMessage = ViewBag.AlertMessage as string;
+}
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @if (!string.IsNullOrEmpty(alertMessage))
+    {
+        <script>
+            alert('@alertMessage');
+        </script>
+    }
+}

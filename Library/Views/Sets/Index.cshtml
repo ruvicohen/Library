@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Library.Models.Set>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">הוסף סט</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameSet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameSet)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">עריכה</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">פרטים</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">מחיקה</a>
+                    <a asp-action="AddBookToSet" asp-route-id="@item.Id" asp-route-Genre="@item.Genre" class="btn btn-primary">add book to set</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

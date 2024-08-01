@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Library.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">הוסף ספר</a>
+</p>
+<p>
+    <a asp-action="CreateSet" class="btn btn-success">הוסף סט ספרים</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Shelf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Set)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shelf.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Set.NameSet)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">עריכה</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">פרטים</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">מחיקה</a>
+                    @{
+                        if (item.ShelfId == null)
+                        {
+                            string message = item.SetId != null ? "סט" : "ספר";
+
+                            <a asp-action="AddBookToShelf" class="btn btn-primary" asp-route-id="@item.Id" asp-route-setId="@item.SetId">הוסף @message למדף </a>
+                        }
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

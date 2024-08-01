@@ -1,0 +1,93 @@
+﻿@model Library.ViewModel.SetViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Set</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h4>Set Details</h4>
+            <br />
+            <div class="form-group">
+                <label asp-for="Set.NameSet" class="control-label"></label>
+                <input asp-for="Set.NameSet" class="form-control" />
+                <span asp-validation-for="Set.NameSet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Set.Genre" class="control-label"></label>
+                <select asp-for="Set.Genre" class="form-control" asp-items="ViewBag.Genres"></select>
+            </div>
+            
+            <br />
+            <h4>Book Details</h4>
+            <br />
+            <div id="books">
+                <div class="form-group">
+                    <label asp-for="Books[0].Name" class="control-label"></label>
+                    <input asp-for="Books[0].Name" class="form-control" />
+                    <span asp-validation-for="Books[0].Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Books[0].Width" class="control-label"></label>
+                    <input asp-for="Books[0].Width" class="form-control" />
+                    <span asp-validation-for="Books[0].Width" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Books[0].Height" class="control-label"></label>
+                    <input asp-for="Books[0].Height" class="form-control" />
+                    <span asp-validation-for="Books[0].Height" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button" onclick="addBook()">Add Another Book</button>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+    let bookIndex = 1;
+
+    function addBook() {
+        const booksDiv = document.getElementById('books');
+        const newBookDiv = document.createElement('div');
+        newBookDiv.className = 'book-input';
+        newBookDiv.innerHTML = `
+                <div class="form-group">
+                    <label for="Books_${bookIndex}__Name">Book Name</label>
+                    <input type="text" id="Books_${bookIndex}__Name" name="Books[${bookIndex}].Name" class="form-control" />
+                    <span class="text-danger" data-valmsg-for="Books[${bookIndex}].Name" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Books_${bookIndex}__Width">Width</label>
+                    <input type="number" id="Books_${bookIndex}__Width" name="Books[${bookIndex}].Width" class="form-control" />
+                    <span class="text-danger" data-valmsg-for="Books[${bookIndex}].Width" data-valmsg-replace="true"></span>
+                </div>
+                    <div class="form-group">
+                        <label for="Books_${bookIndex}__Width">Hieght</label>
+                                <input type="number" id="Books_${bookIndex}__Hieght" name="Books[${bookIndex}].Hieght" class="form-control" />
+                            <span class="text-danger" data-valmsg-for="Books[${bookIndex}].Hieght" data-valmsg-replace="true"></span>
+                    </div>
+            `;
+        booksDiv.appendChild(newBookDiv);
+        bookIndex++;
+    }
+</script>
