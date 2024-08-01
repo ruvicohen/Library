@@ -26,3 +26,9 @@ body {
 .btn {
     margin-top: 13px;
 }
+.content {
+    background-image: url('/Boks.jpeg');
+    background-size: cover;
+    background-position: center;
+    padding: 250px;
+}
